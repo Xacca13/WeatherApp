@@ -10,9 +10,10 @@ import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.weatherapp.databinding.ActivityMainBinding
+import com.example.weatherapp.fragment.MainFragment
 import org.json.JSONObject
 
-private val API_KEY: String = "7a89227171584d2580741309251502"
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,32 +24,12 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(binding.main.id)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        binding.button.setOnClickListener {
-            getResult("Омск")
-        }
+        supportFragmentManager.beginTransaction().replace(binding.main.id, MainFragment.newInstance()).commit()
     }
 
-    private fun getResult(name: String) {
-        val url = "https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${name}&aqi=no"
-        val queue = Volley.newRequestQueue(this)
-        val stringRequest = StringRequest(
-            Request.Method.GET,
-            url,
-            {
-                response ->
-                val res = JSONObject(response)
-                val temp = res.getJSONObject("current")
-                Log.d("MyLog", "Response: ${temp.getString("temp_c")}")
-            },
-            {
-                Log.d("MyLog", "res error: $it")
-            })
-        queue.add(stringRequest)
-
-    }
 }
