@@ -28,6 +28,8 @@
         android:layout_marginEnd="5dp"
         app:cardBackgroundColor="@color/blue"
         app:cardCornerRadius="10dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -39,8 +41,8 @@
 
             <ImageView
                 android:id="@+id/iconWeather"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="80dp"
+                android:layout_height="85dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:src="@drawable/ic_launcher_foreground"
@@ -92,7 +94,7 @@
                 android:fontFamily="serif"
                 android:text="Sunny"
                 android:textColor="@color/white"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvCurrentTemp" />
@@ -101,10 +103,12 @@
                 android:id="@+id/tvTempMinMax"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:fontFamily="serif"
                 android:text="15 C 24C"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvCondition" />

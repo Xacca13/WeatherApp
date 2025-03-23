@@ -6,9 +6,10 @@
     tools:context=".fragment.DaysFragment">
 
     <TextView
+        android:id="@+id/tvEmpty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="@string/tab_days" />
+        android:text="@string/items_empty" />
 
 </FrameLayout>

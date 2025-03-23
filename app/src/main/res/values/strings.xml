@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">WeatherApp</string>
-    <string name="api_key">7a89227171584d2580741309251502</string>
+
     <string name="tab_hours">HOURS</string>
     <string name="tab_days">DAYS</string>
+    <string name="items_empty">EMPTY</string>
     <string name="search_description">search city</string>
     <string name="sync_description">update weather</string>
 </resources>
