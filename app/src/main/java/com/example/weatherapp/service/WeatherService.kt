@@ -36,6 +36,7 @@ class WeatherService {
         val list = parseDaysWeather(body)
         val weather = parseBodyToWeather(body, list[0])
         model.liveDataCurrent.value = weather
+        model.liveDataList.value = list
     }
 
 
@@ -44,7 +45,7 @@ class WeatherService {
             body.getJSONObject("location").getString("region"),
             body.getJSONObject("current").getString("last_updated"),
             body.getJSONObject("current").getJSONObject("condition").getString("text"),
-            body.getJSONObject("current").getString("temp_c") + "°",
+            body.getJSONObject("current").getString("temp_c").toFloat().toInt().toString() + "°",
             weatherItem.minimalTemp,
             weatherItem.maximalTemp,
             "https:" + body.getJSONObject("current").getJSONObject("condition").getString("icon"),
@@ -64,8 +65,8 @@ class WeatherService {
                 day.getString("date"),
                 day.getJSONObject("day").getJSONObject("condition").getString("text"),
                 "",
-                day.getJSONObject("day").getString("mintemp_c") + "°",
-                day.getJSONObject("day").getString("maxtemp_c") + "°",
+                day.getJSONObject("day").getString("mintemp_c").toFloat().toInt().toString() + "°",
+                day.getJSONObject("day").getString("maxtemp_c").toFloat().toInt().toString() + "°",
                 "https:" + day.getJSONObject("day").getJSONObject("condition").getString("icon"),
                 day.getJSONArray("hour").toString()
             )

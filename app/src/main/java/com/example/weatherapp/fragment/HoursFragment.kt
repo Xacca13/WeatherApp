@@ -38,7 +38,7 @@ class HoursFragment : Fragment() {
 
     private fun initRecycledView() = with(binding) {
         rcView.layoutManager = LinearLayoutManager(activity)
-        adapter = WeatherAdapter()
+        adapter = WeatherAdapter(null)
         rcView.adapter = adapter
     }
 
@@ -51,7 +51,7 @@ class HoursFragment : Fragment() {
                 weather.city,
                 (hoursArray[i] as JSONObject).getString("time").substring(10),
                 (hoursArray[i] as JSONObject).getJSONObject("condition").getString("text"),
-                (hoursArray[i] as JSONObject).getString("temp_c") + "°",
+                (hoursArray[i] as JSONObject).getString("temp_c").toFloat().toInt().toString() + "°",
                 "",
                 "",
                 "https:" + (hoursArray[i] as JSONObject).getJSONObject("condition").getString("icon"),
