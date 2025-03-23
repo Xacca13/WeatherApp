@@ -7,8 +7,6 @@ import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,27 +14,22 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
-import com.android.volley.Request
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
 import com.example.weatherapp.R
 import com.example.weatherapp.adapter.ViewPageAdapter
 import com.example.weatherapp.databinding.FragmentMainBinding
 import com.example.weatherapp.dialog.DialogManager
 import com.example.weatherapp.extension.isPermissionGranted
 import com.example.weatherapp.model.MainViewModel
-import com.example.weatherapp.model.Weather
 import com.example.weatherapp.service.WeatherService
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.material.tabs.TabLayoutMediator
 import com.squareup.picasso.Picasso
-import org.json.JSONObject
 
 class MainFragment : Fragment() {
     private val weatherService: WeatherService = WeatherService()
@@ -83,6 +76,13 @@ class MainFragment : Fragment() {
             checkLocation()
             tabLayout.selectTab(tabLayout.getTabAt(0))
         }
+        buttonSearch.setOnClickListener {
+            DialogManager.searchByNameDialog(requireContext(), object : DialogManager.Listener{
+                override fun onClick(name: String?) {
+                    if (name != null) weatherService.requestWeatherData(name, context, model)
+                }
+            })
+        }
     }
 
     private fun updateCurrentCard() = with(binding) {
@@ -97,15 +97,11 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun permissionListener() {
-        pLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()){
-            Toast.makeText(activity, "Permission is $it", Toast.LENGTH_LONG).show()
-        }
-    }
-
     private fun checkPermission() {
         if (!isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
-            permissionListener()
+            pLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()){
+                Toast.makeText(activity, "Permission is $it", Toast.LENGTH_LONG).show()
+            }
             pLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
     }
@@ -115,7 +111,7 @@ class MainFragment : Fragment() {
             getLocation()
         } else {
             DialogManager.locationSettingDialog(requireContext(), object : DialogManager.Listener{
-                override fun onClick() {
+                override fun onClick(name: String?) {
                     startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
                 }
             })
