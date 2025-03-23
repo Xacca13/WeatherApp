@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">WeatherApp</string>
-
+    <string name="app_name">Weather</string>
     <string name="tab_hours">HOURS</string>
     <string name="tab_days">DAYS</string>
     <string name="items_empty">EMPTY</string>
